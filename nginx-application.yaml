@@ -21,3 +21,10 @@ spec:
     automated:
       selfHeal: false
       prune: false 
+
+  ignoreDifferences:
+    - group: ""
+      kind: ConfigMap
+      name: nginx-image-config
+      jsonPointers:
+      - /data/tag

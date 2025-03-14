@@ -1,5 +1,7 @@
 resources:
   - nginx_deployment.yaml
+  - configmap.yaml
+
 
 replacements:
   - source:
