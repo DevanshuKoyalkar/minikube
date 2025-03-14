@@ -1,10 +1,5 @@
 resources:
   - nginx_deployment.yaml
-  # - configmap.yaml
-
-images:
-  - name: nginx
-    newTag: $(NGINX_TAG)
 
 replacements:
   - source:
@@ -20,4 +15,3 @@ replacements:
         options:
           delimiter: ":"
           index: 1
-
