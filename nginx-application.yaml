@@ -3,27 +3,19 @@ kind: Application
 metadata:
   name: nginx-argo-application
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   project: default
-
   source:
     repoURL: https://github.com/DevanshuKoyalkar/minikube
     targetRevision: HEAD
     path: dev/nginx
+    kustomize:
+      parameters:
+      - name: image.tag
+        value: "1.25.0"  # Default value
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp
-
-  ignoreDifferences:
-    - group: ""
-      kind: ConfigMap
-      jqPathExpressions:
-        - .data.tag
-
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
-    - SkipResourceRequirements=true
-    - Validate=false

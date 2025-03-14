@@ -1,18 +1,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 resources:
-  - nginx-deployment.yaml
-  - configmap.yaml  # Include the configmap YAML file
+  - nginx_deployment.yaml
 
-replacements:
-  - source:
-      kind: ConfigMap
-      name: nginx-image-config
-      fieldPath: data.tag
-    targets:
-      - select:
-          kind: Deployment
-          name: nginx-deployment
-        fieldPaths:
-          - spec.template.spec.containers[name=nginx].image # Correct target
+images:
+  - name: nginx
+    newTag: 1.25.0  # This will be overridden by ArgoCD parameter
+
+# resources:
+#   - nginx-deployment.yaml
+#   - configmap.yaml  # Include the configmap YAML file
+
+# replacements:
+#   - source:
+#       kind: ConfigMap
+#       name: nginx-image-config
+#       fieldPath: data.tag
+#     targets:
+#       - select:
+#           kind: Deployment
+#           name: nginx-deployment
+#         fieldPaths:
+#           - spec.template.spec.containers[name=nginx].image # Correct target
