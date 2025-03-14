@@ -16,15 +16,16 @@ spec:
     server: https://kubernetes.default.svc
     namespace: myapp
 
+  ignoreDifferences:
+    - group: ""
+      kind: ConfigMap
+      name: nginx-image-config
+      namespace: myapp
+      jqPathExpressions:
+        - .data.tag
+
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
     - SkipResourceRequirements=true
     - Validate=false
-
-  # Completely exclude the ConfigMap from ArgoCD management
-  ignoredResources:
-    - group: ""
-      kind: ConfigMap
-      name: nginx-image-config
-      namespace: myapp

@@ -1,10 +1,14 @@
 resources:
   - nginx_deployment.yaml
-  # Removing configmap.yaml so ArgoCD won't manage it
 
+# Use ConfigMapGenerator instead of direct ConfigMap reference
+configMapGenerator:
+  - name: nginx-image-config
+    behavior: merge  # This will merge with existing ConfigMap instead of replacing it
+    literals:
+      - tag=1.25.0  # Default value, will be overridden by existing ConfigMap
 
 replacements:
-  # Add a replacement for the ConfigMap hash to force deployment updates
   - source:
       kind: ConfigMap
       name: nginx-image-config
@@ -14,5 +18,7 @@ replacements:
           kind: Deployment
           name: nginx-deployment
         fieldPaths:
-          - metadata.annotations.configmap-tag-hash
-          - spec.template.metadata.annotations.configmap-tag-hash
+          - spec.template.spec.containers.[name=nginx].image
+        options:
+          delimiter: ":"
+          index: 1
