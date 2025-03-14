@@ -1,6 +1,6 @@
 resources:
   - nginx_deployment.yaml
-  - configmap.yaml
+  # - configmap.yaml
 
 images:
   - name: nginx
