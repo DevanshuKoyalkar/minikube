@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: nginx-argo-application
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   project: default
 
@@ -17,14 +19,12 @@ spec:
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
+    - SkipResourceRequirements=true
+    - Validate=false
 
-    automated:
-      selfHeal: false
-      prune: false 
-
-  ignoreDifferences:
+  # Completely exclude the ConfigMap from ArgoCD management
+  ignoredResources:
     - group: ""
       kind: ConfigMap
       name: nginx-image-config
-      jsonPointers:
-      - /data/tag
+      namespace: myapp
