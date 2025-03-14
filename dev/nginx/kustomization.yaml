@@ -1,14 +1,23 @@
 resources:
   - nginx_deployment.yaml
+  - configmap.yaml
 
 images:
   - name: nginx
     newTag: $(NGINX_TAG)
 
-vars:
-  - name: NGINX_TAG
-    objref:
+replacements:
+  - source:
       kind: ConfigMap
       name: nginx-image-config
-      apiVersion: v1
+      fieldPath: data.tag
+    targets:
+      - select:
+          kind: Deployment
+          name: nginx-deployment
+        fieldPaths:
+          - spec.template.spec.containers.[name=nginx].image
+        options:
+          delimiter: ":"
+          index: 1
 
