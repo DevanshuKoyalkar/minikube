@@ -1,12 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
   - nginx_deployment.yaml
-
-# Use ConfigMapGenerator instead of direct ConfigMap reference
-configMapGenerator:
-  - name: nginx-image-config
-    behavior: merge  # This will merge with existing ConfigMap instead of replacing it
-    literals:
-      - tag=1.25.0  # Default value, will be overridden by existing ConfigMap
+  - configmap.yaml  # Include the configmap YAML file
 
 replacements:
   - source:
@@ -18,7 +15,4 @@ replacements:
           kind: Deployment
           name: nginx-deployment
         fieldPaths:
-          - spec.template.spec.containers.[name=nginx].image
-        options:
-          delimiter: ":"
-          index: 1
+          - spec.template.spec.containers[name=nginx-deployment].image # Correct target

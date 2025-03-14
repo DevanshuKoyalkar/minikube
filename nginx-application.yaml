@@ -19,8 +19,6 @@ spec:
   ignoreDifferences:
     - group: ""
       kind: ConfigMap
-      name: nginx-image-config
-      namespace: myapp
       jqPathExpressions:
         - .data.tag
 

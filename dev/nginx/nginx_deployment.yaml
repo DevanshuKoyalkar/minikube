@@ -4,9 +4,6 @@ metadata:
   name: nginx-deployment
   labels:
     app: nginx
-  annotations:
-    # This will cause the deployment to restart when the ConfigMap changes
-    configmap-tag-hash: "${CONFIGMAP_TAG_HASH}"
 spec:
   replicas: 3
   selector:
@@ -16,9 +13,6 @@ spec:
     metadata:
       labels:
         app: nginx
-      annotations:
-        # This will cause the pods to restart when the ConfigMap changes
-        configmap-tag-hash: "${CONFIGMAP_TAG_HASH}"
     spec:
       containers:
       - name: nginx
