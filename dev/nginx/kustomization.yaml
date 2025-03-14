@@ -5,3 +5,10 @@ images:
   - name: nginx
     newTag: $(NGINX_TAG)
 
+vars:
+  - name: NGINX_TAG
+    objref:
+      kind: ConfigMap
+      name: nginx-image-config
+      apiVersion: v1
+
