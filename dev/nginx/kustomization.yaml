@@ -3,4 +3,5 @@ resources:
 
 images:
   - name: nginx
-    newTag: latest
+    newTag: $(NGINX_TAG)
+
