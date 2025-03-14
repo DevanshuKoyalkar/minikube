@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: nginx-image-config
 data:
-  tag: "v1.25.0"
+  tag: "1.25.0"
